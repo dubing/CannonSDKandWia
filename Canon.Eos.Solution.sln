@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canon.Eos.Framework", "Canon.Eos.Framework\Canon.Eos.Framework.csproj", "{F809DBB6-E0E8-47A8-92ED-C24575576A5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canon.Eos.CameraCockpit", "Canon.Eos.CameraCockpit\Canon.Eos.CameraCockpit.csproj", "{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canon.Eos.UnitTests", "Canon.Eos.UnitTests\Canon.Eos.UnitTests.csproj", "{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70C5F29D-C9A4-495B-B52E-32A9E9892A46}"
+	ProjectSection(SolutionItems) = preProject
+		Canon.Eos.Solution.vsmdi = Canon.Eos.Solution.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Canon.Eos.Solution.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F809DBB6-E0E8-47A8-92ED-C24575576A5D}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Debug|x86.ActiveCfg = Debug|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Debug|x86.Build.0 = Debug|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Release|Any CPU.ActiveCfg = Release|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Release|x86.ActiveCfg = Release|x86
+		{BC8E799D-14D7-48AD-8AC4-45BF7CB67D46}.Release|x86.Build.0 = Release|x86
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CD5524BB-7BB7-4E91-B973-F0327E5E1DE9}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
