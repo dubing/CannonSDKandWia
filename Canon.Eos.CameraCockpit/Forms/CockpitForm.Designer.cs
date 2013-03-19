@@ -32,6 +32,7 @@
         {
             this._pictureBox = new System.Windows.Forms.PictureBox();
             this._controlPanel = new System.Windows.Forms.Panel();
+            this.btnLoadPic = new System.Windows.Forms.Button();
             this._liveViewPictureButton = new System.Windows.Forms.Button();
             this._liveViewButton = new System.Windows.Forms.Button();
             this._selectCameraLabel = new System.Windows.Forms.Label();
@@ -43,9 +44,14 @@
             this._browsePicturesOnHostLocationButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.txtMsg = new System.Windows.Forms.TextBox();
-            this.btnLoadPic = new System.Windows.Forms.Button();
+            this.btn_Prev = new System.Windows.Forms.Button();
+            this.btn_Next = new System.Windows.Forms.Button();
+            this._pictureBox02 = new System.Windows.Forms.PictureBox();
+            this.btnNext02 = new System.Windows.Forms.Button();
+            this.btnPrev02 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).BeginInit();
             this._controlPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._pictureBox02)).BeginInit();
             this.SuspendLayout();
             // 
             // _pictureBox
@@ -56,7 +62,7 @@
             this._pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this._pictureBox.Location = new System.Drawing.Point(12, 86);
             this._pictureBox.Name = "_pictureBox";
-            this._pictureBox.Size = new System.Drawing.Size(596, 326);
+            this._pictureBox.Size = new System.Drawing.Size(280, 279);
             this._pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this._pictureBox.TabIndex = 0;
             this._pictureBox.TabStop = false;
@@ -73,8 +79,18 @@
             this._controlPanel.Controls.Add(this._takePictureButton);
             this._controlPanel.Location = new System.Drawing.Point(614, 12);
             this._controlPanel.Name = "_controlPanel";
-            this._controlPanel.Size = new System.Drawing.Size(200, 504);
+            this._controlPanel.Size = new System.Drawing.Size(200, 654);
             this._controlPanel.TabIndex = 1;
+            // 
+            // btnLoadPic
+            // 
+            this.btnLoadPic.Location = new System.Drawing.Point(3, 273);
+            this.btnLoadPic.Name = "btnLoadPic";
+            this.btnLoadPic.Size = new System.Drawing.Size(197, 69);
+            this.btnLoadPic.TabIndex = 5;
+            this.btnLoadPic.Text = "Load Pic";
+            this.btnLoadPic.UseVisualStyleBackColor = true;
+            this.btnLoadPic.Click += new System.EventHandler(this.btnLoadPic_Click);
             // 
             // _liveViewPictureButton
             // 
@@ -168,27 +184,75 @@
             // 
             // txtMsg
             // 
-            this.txtMsg.Location = new System.Drawing.Point(12, 418);
+            this.txtMsg.Location = new System.Drawing.Point(12, 415);
             this.txtMsg.Multiline = true;
             this.txtMsg.Name = "txtMsg";
-            this.txtMsg.Size = new System.Drawing.Size(595, 98);
+            this.txtMsg.Size = new System.Drawing.Size(595, 251);
             this.txtMsg.TabIndex = 6;
             // 
-            // btnLoadPic
+            // btn_Prev
             // 
-            this.btnLoadPic.Location = new System.Drawing.Point(3, 273);
-            this.btnLoadPic.Name = "btnLoadPic";
-            this.btnLoadPic.Size = new System.Drawing.Size(197, 69);
-            this.btnLoadPic.TabIndex = 5;
-            this.btnLoadPic.Text = "Load Pic";
-            this.btnLoadPic.UseVisualStyleBackColor = true;
-            this.btnLoadPic.Click += new System.EventHandler(this.btnLoadPic_Click);
+            this.btn_Prev.Location = new System.Drawing.Point(136, 371);
+            this.btn_Prev.Name = "btn_Prev";
+            this.btn_Prev.Size = new System.Drawing.Size(75, 23);
+            this.btn_Prev.TabIndex = 7;
+            this.btn_Prev.Text = "上一张";
+            this.btn_Prev.UseVisualStyleBackColor = true;
+            this.btn_Prev.Click += new System.EventHandler(this.btn_Prev_Click);
+            // 
+            // btn_Next
+            // 
+            this.btn_Next.Location = new System.Drawing.Point(217, 371);
+            this.btn_Next.Name = "btn_Next";
+            this.btn_Next.Size = new System.Drawing.Size(75, 23);
+            this.btn_Next.TabIndex = 8;
+            this.btn_Next.Text = "下一张";
+            this.btn_Next.UseVisualStyleBackColor = true;
+            this.btn_Next.Click += new System.EventHandler(this.btn_Next_Click);
+            // 
+            // _pictureBox02
+            // 
+            this._pictureBox02.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._pictureBox02.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this._pictureBox02.Location = new System.Drawing.Point(328, 86);
+            this._pictureBox02.Name = "_pictureBox02";
+            this._pictureBox02.Size = new System.Drawing.Size(279, 279);
+            this._pictureBox02.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this._pictureBox02.TabIndex = 9;
+            this._pictureBox02.TabStop = false;
+            // 
+            // btnNext02
+            // 
+            this.btnNext02.Location = new System.Drawing.Point(531, 371);
+            this.btnNext02.Name = "btnNext02";
+            this.btnNext02.Size = new System.Drawing.Size(75, 23);
+            this.btnNext02.TabIndex = 11;
+            this.btnNext02.Text = "下一张";
+            this.btnNext02.UseVisualStyleBackColor = true;
+            this.btnNext02.Click += new System.EventHandler(this.btnNext02_Click);
+            // 
+            // btnPrev02
+            // 
+            this.btnPrev02.Location = new System.Drawing.Point(450, 371);
+            this.btnPrev02.Name = "btnPrev02";
+            this.btnPrev02.Size = new System.Drawing.Size(75, 23);
+            this.btnPrev02.TabIndex = 10;
+            this.btnPrev02.Text = "上一张";
+            this.btnPrev02.UseVisualStyleBackColor = true;
+            this.btnPrev02.Click += new System.EventHandler(this.btnPrev02_Click);
             // 
             // CockpitForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 528);
+            this.ClientSize = new System.Drawing.Size(826, 678);
+            this.Controls.Add(this.btnNext02);
+            this.Controls.Add(this.btnPrev02);
+            this.Controls.Add(this._pictureBox02);
+            this.Controls.Add(this.btn_Next);
+            this.Controls.Add(this.btn_Prev);
             this.Controls.Add(this.txtMsg);
             this.Controls.Add(this._browsePicturesOnHostLocationButton);
             this.Controls.Add(this._picturesOnHostLocationTextBox);
@@ -202,6 +266,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._pictureBox)).EndInit();
             this._controlPanel.ResumeLayout(false);
             this._controlPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._pictureBox02)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,6 +288,11 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnLoadPic;
         private System.Windows.Forms.TextBox txtMsg;
+        private System.Windows.Forms.Button btn_Prev;
+        private System.Windows.Forms.Button btn_Next;
+        private System.Windows.Forms.PictureBox _pictureBox02;
+        private System.Windows.Forms.Button btnNext02;
+        private System.Windows.Forms.Button btnPrev02;
     }
 }
 

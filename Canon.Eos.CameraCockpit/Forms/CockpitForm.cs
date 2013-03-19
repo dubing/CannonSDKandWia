@@ -7,6 +7,7 @@ using Canon.Eos.Framework.Eventing;
 using WIA;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Canon.Eos.CameraCockpit.Forms
 {
@@ -15,14 +16,20 @@ namespace Canon.Eos.CameraCockpit.Forms
         private readonly FrameworkManager _manager;
         // make these global or they will go out of scope
         DeviceManager wiaDevManager = null;
-        Device wiaDevice = null;
-        List<string> downloadPicList;
+        //Device wiaDevice = null;
+        //Device wiaDevice02 = null;
+        List<string> downloadPicList = new List<string>();
+        List<string> downloadPicList02 = new List<string>();
+        public static int currentpic = -1;
+        public static int currentpic02 = -1;
+
 
         public CockpitForm()
         {
             _manager = new FrameworkManager();
             _manager.CameraAdded += this.HandleCameraAdded;
             this.InitializeComponent();
+            Control.CheckForIllegalCrossThreadCalls = false;//这一行是关键     
         }
 
         protected override void OnLoad(EventArgs e)
@@ -274,11 +281,15 @@ namespace Canon.Eos.CameraCockpit.Forms
                 //}
                 DownJpgFromAllCamera();
             }, ex => MessageBox.Show(ex.ToString(), "Problem setting Savelocation", MessageBoxButtons.OK, MessageBoxIcon.Error));
-                              
+
         }
 
-        public void DownJpg(string DeviceID)
+        public void DownJpg(Device wiaDevice, string DeviceID, int index)
         {
+            this.btn_Prev.Enabled = false;
+            this.btn_Next.Enabled = false;
+            this.btnPrev02.Enabled = false;
+            this.btnNext02.Enabled = false;
             //this.txtMsg.Text = "";
             WIA.ImageFile wiaImageFile = null;
             //bool Success = false;
@@ -298,6 +309,8 @@ namespace Canon.Eos.CameraCockpit.Forms
 
                 string extension = wiaImageFile.FileExtension.ToLower().Trim();
 
+                if (extension != "jpg") continue;
+
                 fullName = oldName;
                 if (extension.Length > 0)
                 {
@@ -307,33 +320,158 @@ namespace Canon.Eos.CameraCockpit.Forms
                 string newName = _picturesOnHostLocationTextBox.Text + "\\" + Guid.NewGuid() + "." + extension;
                 wiaImageFile.SaveFile(newName);
 
-                this.txtMsg.Text += "Saving " + oldName + "." + extension + " as " + newName + "\r\n";
+                //this.txtMsg.Text += "相机" + DeviceID + "  Saving " + oldName + "." + extension + " as " + newName + "\r\n";
 
                 if (wiaImageFile != null)
                 {
                     Marshal.ReleaseComObject(wiaImageFile);
                 }
-            }
 
+
+                SetTextBoxValue("相机" + DeviceID + "  Saving " + oldName + "." + extension + " as " + newName + "\r\n", newName, index);
+                if (index == 1)
+                {
+                    downloadPicList.Add(newName);
+                    currentpic++;
+                }
+                else
+                {
+                    downloadPicList02.Add(newName);
+                    currentpic02++;
+                }
+
+
+
+
+                Thread.Sleep(200);
+            }
+            if (index == 1)
+            {
+                this.btn_Prev.Enabled = true;
+                this.btn_Next.Enabled = true;
+            }
+            else
+            {
+                this.btnPrev02.Enabled = true;
+                this.btnNext02.Enabled = true;
+            }
 
         }
 
         public void DownJpgFromAllCamera()
         {
-
+            int i = 1;
             foreach (IDeviceInfo DevInfo in new DeviceManagerClass().DeviceInfos)
             {
                 if (DevInfo.Type == WiaDeviceType.CameraDeviceType)
                 {
                     string DeviceID = DevInfo.DeviceID;
-                    wiaDevice = DevInfo.Connect();
-                    DownJpg(DeviceID);                  
+                    Device wDevice = DevInfo.Connect();
+                    Devparam dev = new Devparam {wiaDevice=wDevice, DeviceID = DeviceID, index = i };
+                    new Thread((Camera) => 
+                        {
+                            DownJpg(((Devparam)Camera).wiaDevice, ((Devparam)Camera).DeviceID, ((Devparam)Camera).index);
+                        }
+                        ).Start(dev);
+                 
+                  
+                    i++;
                 }
             }
+
+            
 
 
 
         }
+
+        private void btn_Prev_Click(object sender, EventArgs e)
+        {
+            currentpic--;
+            if (currentpic == -1)
+            {
+                currentpic++;
+                MessageBox.Show("向前无图片", "无图片", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _pictureBox.Image = Image.FromFile(downloadPicList[currentpic]);
+        }
+
+        private void btn_Next_Click(object sender, EventArgs e)
+        {
+            currentpic++;
+            if (currentpic >= downloadPicList.Count)
+            {
+                currentpic--;
+                MessageBox.Show("向后无图片", "无图片", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _pictureBox.Image = Image.FromFile(downloadPicList[currentpic]);
+        }
+
+        private void btnPrev02_Click(object sender, EventArgs e)
+        {
+            currentpic02--;
+            if (currentpic02 == -1)
+            {
+                currentpic02++;
+                MessageBox.Show("向前无图片", "无图片", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _pictureBox02.Image = Image.FromFile(downloadPicList02[currentpic02]);
+        }
+
+        private void btnNext02_Click(object sender, EventArgs e)
+        {
+            currentpic02++;
+            if (currentpic02 >= downloadPicList02.Count)
+            {
+                currentpic02--;
+                MessageBox.Show("向后无图片", "无图片", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _pictureBox02.Image = Image.FromFile(downloadPicList02[currentpic02]);
+        }
+
+        private delegate void CallSetTextValue();
+
+        public void SetTextBoxValue(string value1, string value2, int mode)
+        {
+            if (mode == 1)
+            {
+                TextBoxSetValue tbsv = new TextBoxSetValue(this.txtMsg, value1, this._pictureBox, value2);
+
+                if (tbsv.tb.InvokeRequired)
+                {
+                    CallSetTextValue call = new CallSetTextValue(tbsv.AddText);
+                    tbsv.tb.Invoke(call);
+                }
+                else
+                {
+                    tbsv.SetText();
+                }
+            }
+            else
+            {
+                TextBoxSetValue tbsv = new TextBoxSetValue(this.txtMsg, value1, this._pictureBox02, value2);
+
+                if (tbsv.tb.InvokeRequired)
+                {
+                    CallSetTextValue call = new CallSetTextValue(tbsv.AddText);
+                    tbsv.tb.Invoke(call);
+                }
+                else
+                {
+                    tbsv.SetText();
+                }
+            }
+
+        }
+
 
         //// True for connected, False for not
         //public bool ConnectToCamera()
@@ -358,4 +496,67 @@ namespace Canon.Eos.CameraCockpit.Forms
 
         //}
     }
+
+    public class Devparam
+    {
+        public Device wiaDevice
+        {
+            get;
+            set;
+        }
+
+        public string DeviceID
+        {
+            get;
+            set;
+        }
+        public int index
+        {
+            get;
+            set;
+        }
+    }
+
+    public class TextBoxSetValue
+    {
+        private string _Value;
+        private string _Value2;
+
+        public TextBoxSetValue(TextBox TxtBox, String Value, PictureBox Picbox, string Value2)
+        {
+
+            tb = TxtBox;
+            _Value = Value;
+            pb = Picbox;
+            _Value2 = Value2;
+
+        }
+
+        public TextBox tb
+        {
+            get;
+            set;
+        }
+
+        public PictureBox pb
+        {
+            get;
+            set;
+        }
+
+        public void SetText()
+        {
+            tb.Text = _Value;
+        }
+
+        public void AddText()
+        {
+            tb.Text += _Value;
+            pb.Image = Image.FromFile(_Value2);
+        }
+
+
+
+    }
+
 }
